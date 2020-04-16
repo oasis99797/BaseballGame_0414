@@ -76,7 +76,60 @@ class MainActivity : BaseActivity() {
 
             chatings.add(Chat(inputEdt.text.toString(), "USER"))
             mChatAdapter?.notifyDataSetChanged()
+
+//            ?S ?B인지 판단해서 => 컴퓨터가 답장.
+
+            checkStrikeAndBall(inputEdt.text.toString())
+
         }
+
+    }
+
+    fun checkStrikeAndBall(inputStr: String) {
+
+//        숫자 세자리의 String이 들어온다. => 3자리 Int 배열로 분리.
+//        "381" => 3,8,1
+
+        val inputNumArr = ArrayList<Int>()
+
+        inputNumArr.add(inputStr.toInt() / 100) // 0번칸 "381"=>381 / 100
+        inputNumArr.add(inputStr.toInt() / 10 % 10) // 1번칸 "381"=>381 => 381 / 10 % 10
+        inputNumArr.add(inputStr.toInt() % 10) // 2번칸 "381" => 381 % 10
+
+//        inputNumArr / computerNumbers를 비교. ?S ?B 판단.
+
+        var strikeCount = 0
+        var ballCount = 0
+
+//        사용자 입력 배열을 다루는 index : i
+        for (i in 0..2) {
+
+//            컴퓨터 입력값을 다루는 index : j
+            for (j in 0..2) {
+
+//                숫자가 같은걸 발견!
+                if (computerNumbers.get(j) == inputNumArr.get(i)) {
+
+//                    위치까지도 같은지? => 같으면 S++, 다르면 B++
+                    if (i == j) {
+                        strikeCount++
+                    }
+                    else {
+                        ballCount++
+                    }
+
+                }
+
+            }
+
+        }
+
+//        총 몇개의 S / B 인지 담겨있게 됨.
+        chatings.add(Chat("${strikeCount}S ${ballCount}B 입니다.", "COMPUTER"))
+        mChatAdapter?.notifyDataSetChanged()
+
+
+
 
     }
 
