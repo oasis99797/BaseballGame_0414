@@ -2,6 +2,7 @@ package com.bklee.baseballgame_0414
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import com.bklee.baseballgame_0414.adapters.ChatAdapter
